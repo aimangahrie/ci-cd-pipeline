@@ -3,43 +3,45 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main 
+      - main # Trigger workflow on pushes to the main branch
   pull_request:
     branches:
-      - main 
+      - main # Trigger workflow on pull requests to the main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
-      
+      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-     
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' 
+          node-version: '16' # Specify Node.js version
 
-      
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      
+      # Step 4: Run tests
       - name: Run tests
         run: npm test
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build 
+    needs: build # Only runs if the build job is successful
 
     steps:
-      
+      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      
+      # Step 2: Deploy to a server
       - name: Deploy application
-        run: echo "Deploy steps go here!"
+        run: |
+          echo "Simulating deployment steps..."
+          # Add your actual deployment commands here (e.g., scp, ssh)
